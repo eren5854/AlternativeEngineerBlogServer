@@ -34,15 +34,6 @@ public sealed class ApplicationDbContext : IdentityDbContext<AppUser, IdentityRo
         builder.Ignore<IdentityUserToken<Guid>>();
         builder.Ignore<IdentityUserRole<Guid>>();
 
-        //builder.Entity<Category>().HasQueryFilter(filter => !filter.IsDeleted);
-        //builder.Entity<Blog>().HasQueryFilter(filter => !filter.IsDeleted);
-        //builder.Entity<Comment>().HasQueryFilter(filter => !filter.IsDeleted);
-        //builder.Entity<Contact>().HasQueryFilter(filter => !filter.IsDeleted);
-        //builder.Entity<Information>().HasQueryFilter(filter => !filter.IsDeleted);
-        //builder.Entity<Tag>().HasQueryFilter(filter => !filter.IsDeleted);
-        //builder.Entity<BlogCategory>().HasQueryFilter(filter => !filter.IsDeleted);
-        //builder.Entity<BlogTag>().HasQueryFilter(filter => !filter.IsDeleted);
-
         builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
 }

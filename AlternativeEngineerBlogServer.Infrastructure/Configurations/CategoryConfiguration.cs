@@ -8,6 +8,7 @@ public sealed class CategoryConfiguration : IEntityTypeConfiguration<Category>
 {
     public void Configure(EntityTypeBuilder<Category> builder)
     {
+        //builder.HasKey(x => x.Id);
         builder
             .Property(p => p.Name)
             .HasConversion(name => name.Value, v => new Name(v))
