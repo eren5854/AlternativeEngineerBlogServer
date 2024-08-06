@@ -8,8 +8,8 @@ using AlternativeEngineerBlogServer.Domain.Users;
 namespace AlternativeEngineerBlogServer.Domain.Blogs;
 public sealed class Blog : Entity
 {
-    public Name Title { get; set; } = new(string.Empty);
-    public Name SubTitle { get; set; } = new(string.Empty);
+    public string Title { get; set; } = string.Empty;
+    public string SubTitle { get; set; } = string.Empty;
     public string Content { get; set; } = string.Empty;
     public int ViewCount { get; set; } = 0;
     public int LikeCount { get; set; } = 0;

@@ -1,5 +1,7 @@
 ﻿using AlternativeEngineerBlogServer.Domain.Users;
 using AlternativeEngineerBlogServer.Infrastructure.Context;
+using AlternativeEngineerBlogServer.Infrastructure.Options;
+using AlternativeEngineerBlogServer.Infrastructure.Services;
 using ED.GenericRepository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -28,12 +30,20 @@ public static class DependencyInjection
             options.Password.RequireUppercase = false;
             options.Password.RequireLowercase = false;
             options.SignIn.RequireConfirmedEmail = true;
-            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-            options.Lockout.MaxFailedAccessAttempts = 3;
+            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(3);
+            options.Lockout.MaxFailedAccessAttempts = 10;
             options.Lockout.AllowedForNewUsers = true;
         }).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
         services.AddScoped<IUnitOfWork>(srv => srv.GetRequiredService<ApplicationDbContext>());
+
+        services.Configure<JwtOption>(configuration.GetSection("Jwt"));
+        services.ConfigureOptions<JwtTokenSetupConfiguration>();
+        services.AddAuthentication()
+            .AddJwtBearer();
+        services.AddAuthorizationBuilder();
+
+        services.AddScoped<JwtProvider>();
 
         services.Scan(action =>
         {

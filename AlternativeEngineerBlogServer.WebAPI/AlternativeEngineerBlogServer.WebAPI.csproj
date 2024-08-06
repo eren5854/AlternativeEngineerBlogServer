@@ -16,7 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AlternativeEngineerBlogServer.Application\AlternativeEngineerBlogServer.Application.csproj" />
     <ProjectReference Include="..\AlternativeEngineerBlogServer.Infrastructure\AlternativeEngineerBlogServer.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\ProfilePictures\" />
   </ItemGroup>
 
 </Project>

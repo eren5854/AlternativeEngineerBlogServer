@@ -4,24 +4,21 @@ using Microsoft.AspNetCore.Identity;
 namespace AlternativeEngineerBlogServer.Domain.Users;
 public sealed class AppUser : IdentityUser<Guid>
 {
-    public Name FirstName { get; set; } = default!;
-    public Name LastName { get; set; } = default!;
+    public string FirstName { get; set; } = default!;
+    public string LastName { get; set; } = default!;
+    public string FullName => string.Join(" ", FirstName, LastName);
     public string? ProfilePicture {  get; set; }
-    public DateOnly DateOfBirth { get; set; }
+    public DateOnly? DateOfBirth { get; set; }
     public string? About {  get; set; }
     
-    public Guid LinkId { get; set; }
+    public Guid? LinkId { get; set; }
     public Link? Link { get; set; }
     
     public UserGenderSmartEnum Gender { get; set; } = UserGenderSmartEnum.Unspecified;
     public UserRoleSmartEnum Role { get; set; } = UserRoleSmartEnum.User;
 
-
     public string? RefreshToken { get; set; }
     public DateTime? RefreshTokenExpires { get; set; }
-
-    public int? EmailConfirmCode { get; set; }
-    public DateTime? EmailConfirmCodeSendDate { get; set; }
 
     public int? ForgotPasswordCode { get; set; }
     public DateTime? ForgotPasswordCodeSendDate { get; set; }

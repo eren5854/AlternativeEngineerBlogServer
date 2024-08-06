@@ -36,4 +36,6 @@ public sealed class ApplicationDbContext : IdentityDbContext<AppUser, IdentityRo
 
         builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
+
+
 }
