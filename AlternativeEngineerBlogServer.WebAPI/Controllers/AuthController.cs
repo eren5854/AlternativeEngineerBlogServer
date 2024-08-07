@@ -14,9 +14,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace AlternativeEngineerBlogServer.WebAPI.Controllers;
 
 [AllowAnonymous]
-public sealed class AuthControllers : ApiController
+public sealed class AuthController : ApiController
 {
-    public AuthControllers(IMediator mediator) : base(mediator)
+    public AuthController(IMediator mediator) : base(mediator)
     {
     }
 

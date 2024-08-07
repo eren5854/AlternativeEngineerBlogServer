@@ -4,7 +4,7 @@ using AlternativeEngineerBlogServer.Infrastructure.Context;
 using ED.GenericRepository;
 
 namespace AlternativeEngineerBlogServer.Infrastructure.Repositories;
-public sealed class AppUserRepository : Repository<AppUser, ApplicationDbContext>, IAppUserRepositry
+public sealed class AppUserRepository : Repository<AppUser, ApplicationDbContext>, IAppUserRepository
 {
     public AppUserRepository(ApplicationDbContext context) : base(context)
     {

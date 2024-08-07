@@ -20,4 +20,8 @@
     <ProjectReference Include="..\AlternativeEngineerBlogServer.Domain\AlternativeEngineerBlogServer.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Authors\Blog\" />
+  </ItemGroup>
+
 </Project>

@@ -20,9 +20,10 @@ internal class JwtProvider(
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(ClaimTypes.NameIdentifier, user.FullName),
-            new Claim(ClaimTypes.NameIdentifier, user.Email ?? ""),
+            //new Claim(ClaimTypes.NameIdentifier, user.Email ?? ""),
+            new Claim(ClaimTypes.Email,  user.Email ?? ""),
             new Claim("UserName", user.UserName ?? ""),
-            new Claim("UserRole", user.Role.ToString())
+            new Claim(ClaimTypes.Role, user.Role.ToString())
         };
 
         DateTime expires = DateTime.Now.AddMinutes(45);
