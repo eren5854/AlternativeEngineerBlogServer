@@ -6,7 +6,7 @@ using ED.Result;
 using FluentValidation.Results;
 using MediatR;
 
-namespace AlternativeEngineerBlogServer.Application.Features.Admin.SetAuthorRoleForUsers;
+namespace AlternativeEngineerBlogServer.Application.Features.Admin.Users.SetAuthorRoleForUsers;
 internal sealed class SetAuthorRoleForUsersCommandHandler(
     IAppUserRepository appUserRepository,
     IMapper mapper,

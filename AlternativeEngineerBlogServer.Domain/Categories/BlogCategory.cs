@@ -1,11 +1,10 @@
-﻿using AlternativeEngineerBlogServer.Domain.Abstractions;
-using AlternativeEngineerBlogServer.Domain.Blogs;
+﻿using AlternativeEngineerBlogServer.Domain.Blogs;
 
 namespace AlternativeEngineerBlogServer.Domain.Categories;
-public sealed class BlogCategory : Entity
+public sealed class BlogCategory
 {
-    public Guid BlogId { get; set; }
-    public Blog Blog { get; set; } = default!;
-    public Guid CategoryId { get; set; }
+    public Guid BlogId { get; set; } = Guid.NewGuid();
+    //public Blog Blog { get; set; } = default!;
+    public Guid CategoryId { get; set; } = Guid.NewGuid();
     public Category Category { get; set; } = default!;
 }

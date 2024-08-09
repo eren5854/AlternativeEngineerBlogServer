@@ -4,7 +4,7 @@ using ED.Result;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace AlternativeEngineerBlogServer.Application.Features.Admin.GetAllUser;
+namespace AlternativeEngineerBlogServer.Application.Features.Admin.Users.GetAllUser;
 internal sealed class GetAllUserQueryHandler(
     IAppUserRepository appUserRepository) : IRequestHandler<GetAllUserQuery, Result<List<AppUser>>>
 {

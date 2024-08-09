@@ -2,5 +2,5 @@
 using ED.Result;
 using MediatR;
 
-namespace AlternativeEngineerBlogServer.Application.Features.Admin.GetAllAuthors;
+namespace AlternativeEngineerBlogServer.Application.Features.Admin.Users.GetAllAuthors;
 public sealed record GetAllAuthorQuery() : IRequest<Result<List<AppUser>>>;

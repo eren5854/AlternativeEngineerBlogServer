@@ -18,7 +18,7 @@ internal class RegisterCommandHandler(
         ValidationResult validationResult = validator.Validate(request);
         if (!validationResult.IsValid)
         {
-            throw new ArgumentException(string.Join(", ", validationResult.Errors));
+            return Result<string>.Failure(validationResult.Errors.First().ErrorMessage);
         }
 
         bool isEmailExists = await userManager.Users.AnyAsync(p => p.Email == request.Email);
