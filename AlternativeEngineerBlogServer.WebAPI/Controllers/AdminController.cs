@@ -14,6 +14,8 @@ using AlternativeEngineerBlogServer.Application.Features.Admin.Informations.Crea
 using AlternativeEngineerBlogServer.Application.Features.Admin.Informations.UpdateInformation;
 using AlternativeEngineerBlogServer.Application.Features.Admin.Informations.DeleteInformationById;
 using AlternativeEngineerBlogServer.Application.Features.Admin.Informations.GetInformation;
+using AlternativeEngineerBlogServer.Application.Features.Admin.Contacts.GetAllContact;
+using AlternativeEngineerBlogServer.Application.Features.Admin.Contacts.DeleteContactById;
 
 namespace AlternativeEngineerBlogServer.WebAPI.Controllers;
 
@@ -112,6 +114,22 @@ public class AdminController : ApiController
     public async Task<IActionResult> GetInformation(CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new GetInformationQuery(), cancellationToken);
+        return StatusCode(result.StatusCode, result);
+    }
+    #endregion
+
+    #region Contact
+    [HttpGet]
+    public async Task<IActionResult> GetAllContact(CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new GetAllContactQuery(), cancellationToken);
+        return StatusCode(result.StatusCode, result);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> DeleteContactById(Guid Id, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new DeleteContactByIdCommand(Id), cancellationToken);
         return StatusCode(result.StatusCode, result);
     }
     #endregion

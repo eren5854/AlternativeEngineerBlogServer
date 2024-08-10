@@ -1,4 +1,4 @@
-﻿using AlternativeEngineerBlogServer.Domain.Users;
+﻿using AlternativeEngineerBlogServer.Domain.DTOs.LinkDtos;
 using ED.Result;
 using MediatR;
 using Microsoft.AspNetCore.Http;

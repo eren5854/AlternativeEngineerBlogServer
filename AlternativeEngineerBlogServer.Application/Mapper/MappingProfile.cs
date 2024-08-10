@@ -4,8 +4,13 @@ using AlternativeEngineerBlogServer.Application.Features.Admin.Informations.Crea
 using AlternativeEngineerBlogServer.Application.Features.Admin.Informations.UpdateInformation;
 using AlternativeEngineerBlogServer.Application.Features.Admin.Users.SetAuthorRoleForUsers;
 using AlternativeEngineerBlogServer.Application.Features.Auth.Register;
+using AlternativeEngineerBlogServer.Application.Features.Users.Contacts.CreateContact;
+using AlternativeEngineerBlogServer.Application.Features.Users.Links.CreateLink;
+using AlternativeEngineerBlogServer.Application.Features.Users.UpdateUser;
 using AlternativeEngineerBlogServer.Domain.Categories;
+using AlternativeEngineerBlogServer.Domain.Contacts;
 using AlternativeEngineerBlogServer.Domain.Informations;
+using AlternativeEngineerBlogServer.Domain.Shared;
 using AlternativeEngineerBlogServer.Domain.Users;
 using AutoMapper;
 
@@ -23,5 +28,11 @@ public sealed class MappingProfile : Profile
 
         CreateMap<CreateInformationCommand, Information>();
         CreateMap<UpdateInformationCommand, Information>();
+
+        CreateMap<UpdateUserCommand, AppUser>();
+
+        CreateMap<CreateContactCommand, Contact>();
+
+        CreateMap<CreateLinkCommand, Link>();
     }
 }

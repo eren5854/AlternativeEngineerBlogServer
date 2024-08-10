@@ -10,6 +10,7 @@ public sealed class Blog : Entity
 {
     public string Title { get; set; } = string.Empty;
     public string SubTitle { get; set; } = string.Empty;
+    public string? MainImage {  get; set; }
     public string Content { get; set; } = string.Empty;
     public int ViewCount { get; set; } = 0;
     public int LikeCount { get; set; } = 0;

@@ -10,9 +10,11 @@ public sealed class AppUser : IdentityUser<Guid>
     public string? ProfilePicture {  get; set; }
     public DateOnly? DateOfBirth { get; set; }
     public string? About {  get; set; }
+
+    public ICollection<Link> Links { get; set; }
     
-    public Guid? LinkId { get; set; }
-    public Link? Link { get; set; }
+    //public Guid? LinkId { get; set; }
+    //public Link? Link { get; set; }
     
     public UserGenderSmartEnum Gender { get; set; } = UserGenderSmartEnum.Unspecified;
     public UserRoleSmartEnum Role { get; set; } = UserRoleSmartEnum.User;
