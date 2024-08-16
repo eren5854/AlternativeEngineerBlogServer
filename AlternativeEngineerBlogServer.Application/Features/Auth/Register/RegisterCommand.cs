@@ -1,4 +1,4 @@
-﻿using AlternativeEngineerBlogServer.Domain.DTOs.LinkDtos;
+﻿using AlternativeEngineerBlogServer.Domain.Users;
 using ED.Result;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -11,5 +11,4 @@ public sealed record RegisterCommand(
     string Email,
     string Password,
     IFormFile? ProfilePicture,
-    DateOnly? DateOfBirth,
-    string? PhoneNumber): IRequest<Result<string>>;
+    UserGenderSmartEnum? Gender): IRequest<Result<string>>;

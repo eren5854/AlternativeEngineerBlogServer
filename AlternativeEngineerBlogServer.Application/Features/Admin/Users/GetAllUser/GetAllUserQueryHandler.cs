@@ -12,6 +12,7 @@ internal sealed class GetAllUserQueryHandler(
     {
         var user = await appUserRepository
             .GetAll()
+            //.Include(u => u.Links)
             .OrderByDescending(p => p.CreatedDate)
             .ToListAsync(cancellationToken);
 

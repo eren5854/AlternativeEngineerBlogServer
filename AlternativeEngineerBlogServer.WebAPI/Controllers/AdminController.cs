@@ -19,8 +19,8 @@ using AlternativeEngineerBlogServer.Application.Features.Admin.Contacts.DeleteCo
 
 namespace AlternativeEngineerBlogServer.WebAPI.Controllers;
 
-//[Authorize(AuthenticationSchemes = "Bearer")]
-//[Authorize(Roles = "Admin")]
+[Authorize(AuthenticationSchemes = "Bearer")]
+[Authorize(Roles = "Admin")]
 
 public class AdminController : ApiController
 {

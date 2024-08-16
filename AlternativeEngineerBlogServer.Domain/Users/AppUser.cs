@@ -11,12 +11,13 @@ public sealed class AppUser : IdentityUser<Guid>
     public DateOnly? DateOfBirth { get; set; }
     public string? About {  get; set; }
 
-    public ICollection<Link> Links { get; set; }
+    public List<Link> Links { get; set; } = new List<Link>();
     
     //public Guid? LinkId { get; set; }
     //public Link? Link { get; set; }
     
-    public UserGenderSmartEnum Gender { get; set; } = UserGenderSmartEnum.Unspecified;
+    //public UserGenderSmartEnum? Gender { get; set; }
+    public UserGenderEnum Gender { get; set; } = UserGenderEnum.Belirtilmemiş;
     public UserRoleSmartEnum Role { get; set; } = UserRoleSmartEnum.User;
 
     public string? RefreshToken { get; set; }

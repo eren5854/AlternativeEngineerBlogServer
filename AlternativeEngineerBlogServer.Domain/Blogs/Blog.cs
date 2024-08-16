@@ -15,9 +15,11 @@ public sealed class Blog : Entity
     public int ViewCount { get; set; } = 0;
     public int LikeCount { get; set; } = 0;
     public int CommentCount { get; set; } = 0;
-    public Guid AppUserId { get; set; }
 
+    public Guid AppUserId { get; set; }
     public AppUser AppUser { get; set; } = default!;
+
+
     public ICollection<BlogCategory> BlogCategories { get; set; }
     public ICollection<BlogTag> BlogTags { get; set; }
     public ICollection<Comment> Comments { get; set; }

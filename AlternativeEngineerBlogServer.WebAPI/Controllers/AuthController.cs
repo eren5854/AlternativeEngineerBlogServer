@@ -28,7 +28,7 @@ public sealed class AuthController : ApiController
     }
 
     [HttpPost]
-    public async Task<IActionResult> SignUp(RegisterCommand request, CancellationToken cancellationToken)
+    public async Task<IActionResult> SignUp([FromForm]RegisterCommand request, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(request, cancellationToken);
         return StatusCode(result.StatusCode, result);

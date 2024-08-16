@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ED.Result;
+using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace AlternativeEngineerBlogServer.Application.Features.Users.Blogs.CreateBlog;
 public sealed record CreateBlogCommand(
     string Title,
     string SubTitle,
-    IFormFile MainImage,
+    IFormFile? MainImage,
     string Content,
     Guid AppUserId,
-    List<Guid> CategoryId);
+    List<Guid> CategoryId) : IRequest<Result<string>>;

@@ -1,5 +1,4 @@
-﻿using AlternativeEngineerBlogServer.Domain.DTOs.LinkDtos;
-using AlternativeEngineerBlogServer.Domain.Users;
+﻿using AlternativeEngineerBlogServer.Domain.Users;
 using ED.Result;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +11,6 @@ public sealed record UpdateUserCommand(
     string UserName,
     IFormFile? ProfilePicture,
     DateOnly? DateOfBirth,
-    UserGenderSmartEnum? Gender,
+    UserGenderEnum? Gender,
     string? PhoneNumber,
     string? About) : IRequest<Result<string>>;

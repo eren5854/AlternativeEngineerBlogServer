@@ -8,11 +8,11 @@ public sealed class AppUserConfiguration : IEntityTypeConfiguration<AppUser>
 {
     public void Configure(EntityTypeBuilder<AppUser> builder)
     {
-        builder
-            .Property(p => p.Gender)
-            .HasConversion(p => p.Value, 
-                           v => UserGenderSmartEnum
-                           .FromValue(v));
+        //builder
+        //    .Property(p => p.Gender)
+        //    .HasConversion(p => p.Value, 
+        //                   v => UserGenderSmartEnum
+        //                   .FromValue(v));
 
         builder
             .Property(p => p.Role)
@@ -67,6 +67,8 @@ public sealed class AppUserConfiguration : IEntityTypeConfiguration<AppUser>
         //                   v => new Name(v))
         //    .HasColumnType("varchar(50)")
         //    .IsRequired();
+
+        builder.HasMany(p => p.Links).WithOne(p => p.AppUser).HasForeignKey(p => p.AppUserId);
 
         builder
             .HasQueryFilter(filter => !filter.IsDeleted);
