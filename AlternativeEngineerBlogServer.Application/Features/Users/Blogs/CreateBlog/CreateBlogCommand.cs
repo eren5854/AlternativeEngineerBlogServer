@@ -9,4 +9,4 @@ public sealed record CreateBlogCommand(
     IFormFile? MainImage,
     string Content,
     Guid AppUserId,
-    List<Guid> CategoryId) : IRequest<Result<string>>;
+    Guid CategoryId) : IRequest<Result<string>>;

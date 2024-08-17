@@ -19,8 +19,10 @@ public sealed class Blog : Entity
     public Guid AppUserId { get; set; }
     public AppUser AppUser { get; set; } = default!;
 
+    public Guid CategoryId { get; set; }
+    public Category Category { get; set; }
 
-    public ICollection<BlogCategory> BlogCategories { get; set; }
+    //public ICollection<BlogCategory> BlogCategories { get; set; }
     public ICollection<BlogTag> BlogTags { get; set; }
     public ICollection<Comment> Comments { get; set; }
 }

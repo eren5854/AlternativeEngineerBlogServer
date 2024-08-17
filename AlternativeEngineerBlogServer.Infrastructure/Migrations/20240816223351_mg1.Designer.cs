@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240811214931_mg8")]
-    partial class mg8
+    [Migration("20240816223351_mg1")]
+    partial class mg1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,9 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("AppUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("CommentCount")
@@ -77,6 +80,8 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Blogs");
                 });
@@ -512,17 +517,19 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("AlternativeEngineerBlogServer.Domain.Categories.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("AppUser");
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("AlternativeEngineerBlogServer.Domain.Categories.BlogCategory", b =>
                 {
-                    b.HasOne("AlternativeEngineerBlogServer.Domain.Blogs.Blog", null)
-                        .WithMany("BlogCategories")
-                        .HasForeignKey("BlogId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("AlternativeEngineerBlogServer.Domain.Categories.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
@@ -584,8 +591,6 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
 
             modelBuilder.Entity("AlternativeEngineerBlogServer.Domain.Blogs.Blog", b =>
                 {
-                    b.Navigation("BlogCategories");
-
                     b.Navigation("BlogTags");
 
                     b.Navigation("Comments");

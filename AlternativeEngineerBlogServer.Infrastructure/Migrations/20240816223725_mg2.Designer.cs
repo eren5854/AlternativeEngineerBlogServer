@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240806060736_mg3")]
-    partial class mg3
+    [Migration("20240816223725_mg2")]
+    partial class mg2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,9 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("AppUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("CommentCount")
@@ -54,6 +57,9 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                     b.Property<int>("LikeCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("MainImage")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SubTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -75,44 +81,9 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("Blogs");
-                });
-
-            modelBuilder.Entity("AlternativeEngineerBlogServer.Domain.Categories.BlogCategory", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("BlogId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BlogId");
-
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("BlogCategories");
+                    b.ToTable("Blogs");
                 });
 
             modelBuilder.Entity("AlternativeEngineerBlogServer.Domain.Categories.Category", b =>
@@ -136,7 +107,8 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -200,15 +172,18 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
 
                     b.Property<string>("ContactEmail")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("ContactName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(MAX)");
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
@@ -222,7 +197,8 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
 
                     b.Property<string>("Subject")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -242,7 +218,9 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
@@ -253,24 +231,37 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("varchar(300)");
+
+                    b.Property<string>("GithubUrl")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("InstagramUrl")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<Guid?>("LinkId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("LinkedinUrl")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(11)
+                        .HasColumnType("varchar(11)");
 
                     b.Property<string>("SubTitle")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -278,17 +269,22 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("XUrl")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("LinkId");
-
-                    b.ToTable("Informations");
+                    b.ToTable("Informations", (string)null);
                 });
 
             modelBuilder.Entity("AlternativeEngineerBlogServer.Domain.Shared.Link", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("AppUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreatedBy")
@@ -301,7 +297,7 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Logo")
+                    b.Property<string>("LogoName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedBy")
@@ -315,44 +311,24 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AppUserId");
+
                     b.ToTable("Link");
                 });
 
             modelBuilder.Entity("AlternativeEngineerBlogServer.Domain.Tags.BlogTag", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("BlogId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<Guid>("TagId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BlogId");
+                    b.HasKey("BlogId", "TagId");
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("BlogsTags");
+                    b.ToTable("BlogTags", (string)null);
                 });
 
             modelBuilder.Entity("AlternativeEngineerBlogServer.Domain.Tags.Tag", b =>
@@ -442,9 +418,6 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<Guid?>("LinkId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -498,8 +471,6 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LinkId");
-
                     b.ToTable("Users");
                 });
 
@@ -531,24 +502,13 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AppUser");
-                });
-
-            modelBuilder.Entity("AlternativeEngineerBlogServer.Domain.Categories.BlogCategory", b =>
-                {
-                    b.HasOne("AlternativeEngineerBlogServer.Domain.Blogs.Blog", "Blog")
-                        .WithMany("BlogCategories")
-                        .HasForeignKey("BlogId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("AlternativeEngineerBlogServer.Domain.Categories.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Blog");
+                    b.Navigation("AppUser");
 
                     b.Navigation("Category");
                 });
@@ -577,18 +537,18 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                     b.Navigation("Blog");
                 });
 
-            modelBuilder.Entity("AlternativeEngineerBlogServer.Domain.Informations.Information", b =>
+            modelBuilder.Entity("AlternativeEngineerBlogServer.Domain.Shared.Link", b =>
                 {
-                    b.HasOne("AlternativeEngineerBlogServer.Domain.Shared.Link", "Link")
-                        .WithMany()
-                        .HasForeignKey("LinkId");
+                    b.HasOne("AlternativeEngineerBlogServer.Domain.Users.AppUser", "AppUser")
+                        .WithMany("Links")
+                        .HasForeignKey("AppUserId");
 
-                    b.Navigation("Link");
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("AlternativeEngineerBlogServer.Domain.Tags.BlogTag", b =>
                 {
-                    b.HasOne("AlternativeEngineerBlogServer.Domain.Blogs.Blog", "Blog")
+                    b.HasOne("AlternativeEngineerBlogServer.Domain.Blogs.Blog", null)
                         .WithMany("BlogTags")
                         .HasForeignKey("BlogId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -600,27 +560,19 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Blog");
-
                     b.Navigation("Tag");
-                });
-
-            modelBuilder.Entity("AlternativeEngineerBlogServer.Domain.Users.AppUser", b =>
-                {
-                    b.HasOne("AlternativeEngineerBlogServer.Domain.Shared.Link", "Link")
-                        .WithMany()
-                        .HasForeignKey("LinkId");
-
-                    b.Navigation("Link");
                 });
 
             modelBuilder.Entity("AlternativeEngineerBlogServer.Domain.Blogs.Blog", b =>
                 {
-                    b.Navigation("BlogCategories");
-
                     b.Navigation("BlogTags");
 
                     b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("AlternativeEngineerBlogServer.Domain.Users.AppUser", b =>
+                {
+                    b.Navigation("Links");
                 });
 #pragma warning restore 612, 618
         }

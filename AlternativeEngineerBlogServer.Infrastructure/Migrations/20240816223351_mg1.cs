@@ -16,7 +16,7 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false),
                     MainCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -39,10 +39,10 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ContactName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ContactEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Subject = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContactName = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false),
+                    ContactEmail = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    Subject = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
+                    Content = table.Column<string>(type: "varchar(MAX)", maxLength: 1000, nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -55,12 +55,19 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Link",
+                name: "Informations",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Logo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Title = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false),
+                    SubTitle = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: false),
+                    Address = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "varchar(11)", maxLength: 11, nullable: true),
+                    LinkedinUrl = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
+                    InstagramUrl = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
+                    XUrl = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
+                    GithubUrl = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -69,7 +76,7 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Link", x => x.Id);
+                    table.PrimaryKey("PK_Informations", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -104,49 +111,19 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Informations",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SubTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LinkId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Informations", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Informations_Link_LinkId",
-                        column: x => x.LinkId,
-                        principalTable: "Link",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     ProfilePicture = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateOfBirth = table.Column<DateOnly>(type: "date", nullable: false),
-                    About = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LinkId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DateOfBirth = table.Column<DateOnly>(type: "date", nullable: true),
+                    About = table.Column<string>(type: "varchar(MAX)", maxLength: 2000, nullable: true),
                     Gender = table.Column<int>(type: "int", nullable: false),
                     Role = table.Column<int>(type: "int", nullable: false),
                     RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RefreshTokenExpires = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    EmailConfirmCode = table.Column<int>(type: "int", nullable: true),
-                    EmailConfirmCodeSendDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ForgotPasswordCode = table.Column<int>(type: "int", nullable: true),
                     ForgotPasswordCodeSendDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -154,15 +131,15 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "varchar(75)", maxLength: 75, nullable: false),
                     NormalizedEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "varchar(13)", maxLength: 13, nullable: true),
                     PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -172,10 +149,22 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BlogCategories",
+                columns: table => new
+                {
+                    BlogId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BlogCategories", x => new { x.BlogId, x.CategoryId });
                     table.ForeignKey(
-                        name: "FK_Users_Link_LinkId",
-                        column: x => x.LinkId,
-                        principalTable: "Link",
+                        name: "FK_BlogCategories_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -187,11 +176,13 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SubTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MainImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ViewCount = table.Column<int>(type: "int", nullable: false),
                     LikeCount = table.Column<int>(type: "int", nullable: false),
                     CommentCount = table.Column<int>(type: "int", nullable: false),
                     AppUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -202,6 +193,12 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Blogs", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Blogs_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Blogs_Users_AppUserId",
                         column: x => x.AppUserId,
                         principalTable: "Users",
@@ -210,12 +207,13 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BlogCategories",
+                name: "Link",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BlogId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    LogoName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AppUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -224,45 +222,32 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BlogCategories", x => x.Id);
+                    table.PrimaryKey("PK_Link", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BlogCategories_Blogs_BlogId",
-                        column: x => x.BlogId,
-                        principalTable: "Blogs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BlogCategories_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Link_Users_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "BlogsTags",
+                name: "BlogTags",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BlogId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TagId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    TagId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BlogsTags", x => x.Id);
+                    table.PrimaryKey("PK_BlogTags", x => new { x.BlogId, x.TagId });
                     table.ForeignKey(
-                        name: "FK_BlogsTags_Blogs_BlogId",
+                        name: "FK_BlogTags_Blogs_BlogId",
                         column: x => x.BlogId,
                         principalTable: "Blogs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_BlogsTags_Tags_TagId",
+                        name: "FK_BlogTags_Tags_TagId",
                         column: x => x.TagId,
                         principalTable: "Tags",
                         principalColumn: "Id",
@@ -299,11 +284,6 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BlogCategories_BlogId",
-                table: "BlogCategories",
-                column: "BlogId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_BlogCategories_CategoryId",
                 table: "BlogCategories",
                 column: "CategoryId");
@@ -314,13 +294,13 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                 column: "AppUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BlogsTags_BlogId",
-                table: "BlogsTags",
-                column: "BlogId");
+                name: "IX_Blogs_CategoryId",
+                table: "Blogs",
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BlogsTags_TagId",
-                table: "BlogsTags",
+                name: "IX_BlogTags_TagId",
+                table: "BlogTags",
                 column: "TagId");
 
             migrationBuilder.CreateIndex(
@@ -339,14 +319,9 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                 column: "BlogId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Informations_LinkId",
-                table: "Informations",
-                column: "LinkId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_LinkId",
-                table: "Users",
-                column: "LinkId");
+                name: "IX_Link_AppUserId",
+                table: "Link",
+                column: "AppUserId");
         }
 
         /// <inheritdoc />
@@ -356,7 +331,7 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                 name: "BlogCategories");
 
             migrationBuilder.DropTable(
-                name: "BlogsTags");
+                name: "BlogTags");
 
             migrationBuilder.DropTable(
                 name: "Comments");
@@ -368,10 +343,10 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                 name: "Informations");
 
             migrationBuilder.DropTable(
-                name: "Roles");
+                name: "Link");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Tags");
@@ -380,10 +355,10 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                 name: "Blogs");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Link");
+                name: "Users");
         }
     }
 }

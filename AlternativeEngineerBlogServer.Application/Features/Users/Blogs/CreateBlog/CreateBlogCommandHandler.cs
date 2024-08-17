@@ -18,7 +18,7 @@ internal sealed class CreateBlogCommandHandler(
         AppUser user = await appUserRepository.GetByExpressionAsync(p => p.Id == request.AppUserId);
 
         Blog blog = mapper.Map<Blog>(request);
-        blog.CreatedBy = user.UserName;
+        blog.CreatedBy = user.FullName;
         blog.CreatedDate = DateTime.Now;
 
         await blogRepository.AddAsync(blog, cancellationToken);

@@ -1,4 +1,8 @@
 ﻿using AlternativeEngineerBlogServer.Application.Features.Users.Blogs.CreateBlog;
+using AlternativeEngineerBlogServer.Application.Features.Users.Blogs.GetAllBlog;
+using AlternativeEngineerBlogServer.Application.Features.Users.Blogs.GetBlogAuthor;
+using AlternativeEngineerBlogServer.Application.Features.Users.Categories.GetAllCategory;
+using AlternativeEngineerBlogServer.Application.Features.Users.Categories.GetCategoryById;
 using AlternativeEngineerBlogServer.Application.Features.Users.Contacts.CreateContact;
 using AlternativeEngineerBlogServer.Application.Features.Users.GetAllAuthors;
 using AlternativeEngineerBlogServer.Application.Features.Users.GetInformation;
@@ -96,6 +100,34 @@ public class UserController : ApiController
     public async Task<IActionResult> CreateBlog(CreateBlogCommand request, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(request, cancellationToken);
+        return StatusCode(result.StatusCode, result);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllBlog(CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new GetAllBlogQuery(), cancellationToken);
+        return StatusCode(result.StatusCode, result);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllCategory(CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new GetAllCategoryQuery(), cancellationToken);
+        return StatusCode(result.StatusCode, result);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetCategoryById(Guid Id, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new GetCategoryByIdCommand(Id), cancellationToken);
+        return StatusCode(result.StatusCode, result);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetBlogAuthor(Guid Id, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new GetBlogAuthorCommand(Id), cancellationToken);
         return StatusCode(result.StatusCode, result);
     }
 }
