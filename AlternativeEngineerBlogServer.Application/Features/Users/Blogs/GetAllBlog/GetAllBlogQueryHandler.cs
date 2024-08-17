@@ -24,6 +24,7 @@ internal sealed class GetAllBlogQueryHandler(
             .GetAll()
             .OrderBy(o => o.CreatedDate)
             .Select(b => new BlogDto(
+                b.Id,
                 b.Title,
                 b.SubTitle,
                 b.Content,
@@ -31,6 +32,7 @@ internal sealed class GetAllBlogQueryHandler(
                 b.ViewCount,
                 b.LikeCount,
                 b.CommentCount,
+                b.CategoryId,
                 new GetBlogAuthorDto(
                     b.AppUser.FirstName,
                     b.AppUser.LastName,

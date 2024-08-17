@@ -1,5 +1,6 @@
 ﻿namespace AlternativeEngineerBlogServer.Domain.DTOs;
 public sealed record BlogDto(
+    Guid? Id,
     string Title,
     string SubTitle,
     string Content,
@@ -7,4 +8,5 @@ public sealed record BlogDto(
     int ViewCount,
     int LikeCount,
     int CommentCount,
+    Guid CategoryId,
     GetBlogAuthorDto Author);

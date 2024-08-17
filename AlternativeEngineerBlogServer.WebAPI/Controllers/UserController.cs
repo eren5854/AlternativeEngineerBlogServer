@@ -1,6 +1,6 @@
 ﻿using AlternativeEngineerBlogServer.Application.Features.Users.Blogs.CreateBlog;
 using AlternativeEngineerBlogServer.Application.Features.Users.Blogs.GetAllBlog;
-using AlternativeEngineerBlogServer.Application.Features.Users.Blogs.GetBlogAuthor;
+using AlternativeEngineerBlogServer.Application.Features.Users.Blogs.GetBlogById;
 using AlternativeEngineerBlogServer.Application.Features.Users.Categories.GetAllCategory;
 using AlternativeEngineerBlogServer.Application.Features.Users.Categories.GetCategoryById;
 using AlternativeEngineerBlogServer.Application.Features.Users.Contacts.CreateContact;
@@ -96,6 +96,7 @@ public class UserController : ApiController
         return StatusCode(result.StatusCode, result);
     }
 
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [HttpPost]
     public async Task<IActionResult> CreateBlog(CreateBlogCommand request, CancellationToken cancellationToken)
     {
@@ -125,9 +126,9 @@ public class UserController : ApiController
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetBlogAuthor(Guid Id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetBlogById(Guid Id, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new GetBlogAuthorCommand(Id), cancellationToken);
+        var result = await _mediator.Send(new GetBlogByIdCommand(Id), cancellationToken);
         return StatusCode(result.StatusCode, result);
     }
 }
