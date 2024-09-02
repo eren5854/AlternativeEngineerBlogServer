@@ -1,12 +1,16 @@
-﻿namespace AlternativeEngineerBlogServer.Domain.DTOs;
+﻿using AlternativeEngineerBlogServer.Domain.Categories;
+
+namespace AlternativeEngineerBlogServer.Domain.DTOs;
 public sealed record BlogDto(
     Guid? Id,
     string Title,
-    string SubTitle,
-    string Content,
+    string? SubTitle,
+    string? Content,
     string? MainImage,
     int ViewCount,
     int LikeCount,
     int CommentCount,
     Guid CategoryId,
-    GetBlogAuthorDto Author);
+    DateTime? CreatedDate,
+    GetBlogAuthorDto? Author,
+    GetCategoryDto Category);

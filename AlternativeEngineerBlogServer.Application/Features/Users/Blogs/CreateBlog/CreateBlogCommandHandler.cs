@@ -4,6 +4,7 @@ using AlternativeEngineerBlogServer.Domain.Users;
 using AutoMapper;
 using ED.GenericRepository;
 using ED.Result;
+using GenericFileService.Files;
 using MediatR;
 
 namespace AlternativeEngineerBlogServer.Application.Features.Users.Blogs.CreateBlog;
@@ -17,7 +18,19 @@ internal sealed class CreateBlogCommandHandler(
     {
         AppUser user = await appUserRepository.GetByExpressionAsync(p => p.Id == request.AppUserId);
 
+        string mainImage = "";
+        var response = request.MainImage;
+        if (response is null)
+        {
+            mainImage = "";
+        }
+        else
+        {
+            mainImage = FileService.FileSaveToServer(request.MainImage!, "wwwroot/Images/");
+        }
+
         Blog blog = mapper.Map<Blog>(request);
+        blog.MainImage = mainImage;
         blog.CreatedBy = user.FullName;
         blog.CreatedDate = DateTime.Now;
 

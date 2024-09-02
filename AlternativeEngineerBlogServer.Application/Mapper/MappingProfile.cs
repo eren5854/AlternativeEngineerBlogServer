@@ -5,6 +5,7 @@ using AlternativeEngineerBlogServer.Application.Features.Admin.Informations.Upda
 using AlternativeEngineerBlogServer.Application.Features.Admin.Users.SetAuthorRoleForUsers;
 using AlternativeEngineerBlogServer.Application.Features.Auth.Register;
 using AlternativeEngineerBlogServer.Application.Features.Users.Blogs.CreateBlog;
+using AlternativeEngineerBlogServer.Application.Features.Users.Blogs.UpdateBlog;
 using AlternativeEngineerBlogServer.Application.Features.Users.Contacts.CreateContact;
 using AlternativeEngineerBlogServer.Application.Features.Users.Links.CreateLink;
 using AlternativeEngineerBlogServer.Application.Features.Users.Links.UpdateLink;
@@ -40,6 +41,7 @@ public sealed class MappingProfile : Profile
         CreateMap<UpdateLinkCommand, Link>();
 
         CreateMap<CreateBlogCommand, Blog>();
+        CreateMap<UpdateBlogCommand, Blog>();
 
     }
 }

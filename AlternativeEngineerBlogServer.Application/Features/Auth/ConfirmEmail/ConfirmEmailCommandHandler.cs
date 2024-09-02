@@ -12,12 +12,17 @@ internal sealed class ConfirmEmailCommandHandler(
         AppUser? user = await userManager.FindByEmailAsync(request.Email);
         if (user is null)
         {
-            return Result<string>.Failure("User not found");
+            return Result<string>.Failure("Kullanıcı bulunamadı");
+        }
+
+        if (user.EmailConfirmed)
+        {
+            return Result<string>.Failure("E-posta adresi zaten onaylı");
         }
 
         user.EmailConfirmed = true;
         await userManager.UpdateAsync(user);
 
-        return Result<string>.Succeed("Email address confirmed successfully");
+        return Result<string>.Succeed("E-posta adresi onaylandı");
     }
 }

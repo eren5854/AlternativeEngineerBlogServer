@@ -33,11 +33,15 @@ internal sealed class GetAllBlogQueryHandler(
                 b.LikeCount,
                 b.CommentCount,
                 b.CategoryId,
+                b.CreatedDate,
                 new GetBlogAuthorDto(
                     b.AppUser.FirstName,
                     b.AppUser.LastName,
                     b.AppUser.Role,
-                    b.AppUser.ProfilePicture))
+                    b.AppUser.ProfilePicture),
+                new GetCategoryDto(
+                    b.Category.Id,
+                    b.Category.Name))
             )
             .ToListAsync(cancellationToken);
 

@@ -25,18 +25,25 @@ internal sealed class UpdateUserCommandHandler(
         AppUser user = await appUserRepository.GetByExpressionAsync(p => p.Id == request.Id, cancellationToken);
         if (user == null)
         {
-            return Result<string>.Failure("User not found");
+            return Result<string>.Failure("Kullanıcı bulunamadı!");
         }
 
+        bool isUserNameExists = await appUserRepository.AnyAsync(p => p.UserName == request.UserName, cancellationToken);
+        if (isUserNameExists && user.UserName != request.UserName)
+        {
+            
+            return Result<string>.Failure("Kullanıcı adı zaten mevcut!");
+        }
+        
         string profilePicture = "";
         var response = request.ProfilePicture;
         if (response is null)
         {
-            profilePicture = "";
+            profilePicture = user.ProfilePicture!;
         }
         else
         {
-            profilePicture = FileService.FileSaveToServer(request.ProfilePicture, "wwwroot/ProfilePictures/");
+            profilePicture = FileService.FileSaveToServer(request.ProfilePicture!, "wwwroot/ProfilePictures/");
         }
 
         mapper.Map(request, user);
@@ -47,6 +54,6 @@ internal sealed class UpdateUserCommandHandler(
         appUserRepository.Update(user);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return Result<string>.Succeed("Update is successful");
+        return Result<string>.Succeed("Kullanıcı güncellemesi başarılı.");
     }
 }
