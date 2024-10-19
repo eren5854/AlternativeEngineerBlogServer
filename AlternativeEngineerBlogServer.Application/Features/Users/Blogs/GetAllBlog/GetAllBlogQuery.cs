@@ -4,4 +4,4 @@ using ED.Result;
 using MediatR;
 
 namespace AlternativeEngineerBlogServer.Application.Features.Users.Blogs.GetAllBlog;
-public sealed record GetAllBlogQuery() : IRequest<Result<List<BlogDto>>>;
+public sealed record GetAllBlogQuery() : IRequest<Result<List<GetAllBlogDto>>>;

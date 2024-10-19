@@ -19,7 +19,7 @@ internal sealed class CreateLinkCommandHandler(
         AppUser? user = await userManager.FindByIdAsync(request.AppUserId.ToString());
 
         Link link = mapper.Map<Link>(request);
-        link.CreatedBy = user.UserName!;
+        link.CreatedBy = user!.UserName!;
         link.CreatedDate = DateTime.Now;
 
         await linkRepository.AddAsync(link, cancellationToken);

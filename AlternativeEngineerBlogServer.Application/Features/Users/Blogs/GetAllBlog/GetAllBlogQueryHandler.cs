@@ -1,17 +1,14 @@
-﻿using AlternativeEngineerBlogServer.Domain.Blogs;
-using AlternativeEngineerBlogServer.Domain.DTOs;
+﻿using AlternativeEngineerBlogServer.Domain.DTOs;
 using AlternativeEngineerBlogServer.Domain.Repositories;
-using AlternativeEngineerBlogServer.Domain.Users;
 using ED.Result;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlternativeEngineerBlogServer.Application.Features.Users.Blogs.GetAllBlog;
 internal sealed class GetAllBlogQueryHandler(
-    IBlogRepository blogRepository,
-    IAppUserRepository appUserRepository) : IRequestHandler<GetAllBlogQuery, Result<List<BlogDto>>>
+    IBlogRepository blogRepository) : IRequestHandler<GetAllBlogQuery, Result<List<GetAllBlogDto>>>
 {
-    public async Task<Result<List<BlogDto>>> Handle(GetAllBlogQuery request, CancellationToken cancellationToken)
+    public async Task<Result<List<GetAllBlogDto>>> Handle(GetAllBlogQuery request, CancellationToken cancellationToken)
     {
 
         //var blogs = await blogRepository
@@ -23,29 +20,27 @@ internal sealed class GetAllBlogQueryHandler(
         var blogs = await blogRepository
             .GetAll()
             .OrderBy(o => o.CreatedDate)
-            .Select(b => new BlogDto(
+            .Select(b => new GetAllBlogDto(
                 b.Id,
                 b.Title,
                 b.SubTitle,
-                b.Content,
-                b.MainImage, // Opsiyonel, eğer null olabiliyorsa sorun olmaz
+                b.MainImage,
                 b.ViewCount,
-                b.LikeCount,
-                b.CommentCount,
                 b.CategoryId,
                 b.CreatedDate,
                 new GetBlogAuthorDto(
                     b.AppUser.FirstName,
                     b.AppUser.LastName,
+                    b.AppUser.UserName,
                     b.AppUser.Role,
                     b.AppUser.ProfilePicture),
                 new GetCategoryDto(
                     b.Category.Id,
-                    b.Category.Name))
-            )
+                    b.Category.Name)))
             .ToListAsync(cancellationToken);
 
+        var sortedBlogs = blogs.OrderByDescending(o => o.CreatedDate).ToList();
 
-        return Result<List<BlogDto>>.Succeed(blogs);
+        return Result<List<GetAllBlogDto>>.Succeed(sortedBlogs);
     }
 }

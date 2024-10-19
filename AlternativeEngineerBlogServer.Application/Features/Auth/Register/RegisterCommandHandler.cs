@@ -2,7 +2,6 @@
 using AutoMapper;
 using ED.Result;
 using FluentValidation.Results;
-using GenericFileService.Files;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -33,20 +32,10 @@ internal class RegisterCommandHandler(
             return Result<string>.Failure("User name alredy exists");
         }
 
-        string profilePicture = "";
-        var response = request.ProfilePicture;
-        if (response is null)
-        {
-            profilePicture = "";
-        }
-        else
-        {
-            profilePicture = FileService.FileSaveToServer(request.ProfilePicture, "wwwroot/ProfilePictures/");
-        }
-
         AppUser user = mapper.Map<AppUser>(request);
-        user.ProfilePicture = profilePicture;
         user.CreatedBy = request.UserName;
+        user.Gender = UserGenderEnum.Belirtilmemiş;
+        //user.EmailConfirmed = true;
         user.CreatedDate = DateTime.Now;
         user.Role = UserRoleSmartEnum.User;
 

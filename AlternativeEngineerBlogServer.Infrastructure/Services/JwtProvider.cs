@@ -26,7 +26,7 @@ internal class JwtProvider(
             new Claim(ClaimTypes.Role, user.Role.ToString())
         };
 
-        DateTime expires = DateTime.Now.AddMinutes(60);
+        DateTime expires = DateTime.Now.AddHours(24);
 
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOption.Value.SecretKey));
 

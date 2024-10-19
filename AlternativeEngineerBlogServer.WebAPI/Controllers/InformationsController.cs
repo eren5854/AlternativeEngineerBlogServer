@@ -1,7 +1,9 @@
 ﻿using AlternativeEngineerBlogServer.Application.Features.Admin.Informations.CreateInformation;
 using AlternativeEngineerBlogServer.Application.Features.Admin.Informations.DeleteInformationById;
 using AlternativeEngineerBlogServer.Application.Features.Admin.Informations.GetInformation;
+using AlternativeEngineerBlogServer.Application.Features.Admin.Informations.GetVisitorCount;
 using AlternativeEngineerBlogServer.Application.Features.Admin.Informations.UpdateInformation;
+using AlternativeEngineerBlogServer.Application.Features.Users.UpdateVisitCount;
 using AlternativeEngineerBlogServer.WebAPI.Abstractions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -47,6 +49,20 @@ public class InformationsController : ApiController
     public async Task<IActionResult> GetInformation(CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new GetInformationQuery(), cancellationToken);
+        return StatusCode(result.StatusCode, result);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> UpdateVisitCount(Guid Id, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new UpdateVisitCountCommand(Id), cancellationToken);
+        return StatusCode(result.StatusCode, result);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetVisitorCount(CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new GetVisitorCountQuery(), cancellationToken);
         return StatusCode(result.StatusCode, result);
     }
     #endregion

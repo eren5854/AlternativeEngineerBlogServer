@@ -1,5 +1,6 @@
 ﻿namespace AlternativeEngineerBlogServer.Domain.DTOs;
 public sealed record GetInformationDto(
+    Guid? Id,
     string Title,
     string SubTitle,
     string Description,

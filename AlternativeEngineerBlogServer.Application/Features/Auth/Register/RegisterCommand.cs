@@ -10,5 +10,5 @@ public sealed record RegisterCommand(
     string UserName,
     string Email,
     string Password,
-    IFormFile? ProfilePicture,
+    //IFormFile? ProfilePicture,
     UserGenderSmartEnum? Gender): IRequest<Result<string>>;

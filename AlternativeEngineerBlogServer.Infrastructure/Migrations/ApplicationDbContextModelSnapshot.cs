@@ -80,7 +80,7 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Blogs");
+                    b.ToTable("Blogs", (string)null);
                 });
 
             modelBuilder.Entity("AlternativeEngineerBlogServer.Domain.Categories.Category", b =>
@@ -117,7 +117,7 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
 
                     b.HasIndex("MainCategoryId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("AlternativeEngineerBlogServer.Domain.Comments.Comment", b =>
@@ -134,7 +134,8 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(1000)");
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
@@ -145,6 +146,9 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<Guid?>("MainCommentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -158,7 +162,9 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
 
                     b.HasIndex("BlogId");
 
-                    b.ToTable("Comments");
+                    b.HasIndex("MainCommentId");
+
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("AlternativeEngineerBlogServer.Domain.Contacts.Contact", b =>
@@ -192,6 +198,9 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<bool?>("IsRead")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Subject")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -205,7 +214,85 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Contacts");
+                    b.ToTable("Contacts", (string)null);
+                });
+
+            modelBuilder.Entity("AlternativeEngineerBlogServer.Domain.EmailJsParameters.EmailJsParameter", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("PublicKey")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("ServiceId")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("TemplateId")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmailJsParameters", (string)null);
+                });
+
+            modelBuilder.Entity("AlternativeEngineerBlogServer.Domain.Emails.Newsletter", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Newsletter", (string)null);
                 });
 
             modelBuilder.Entity("AlternativeEngineerBlogServer.Domain.Informations.Information", b =>
@@ -230,6 +317,9 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("varchar(300)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GithubUrl")
                         .HasMaxLength(50)
@@ -265,6 +355,9 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("VisitCount")
+                        .HasColumnType("int");
 
                     b.Property<string>("XUrl")
                         .HasMaxLength(50)
@@ -310,7 +403,7 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("Link");
+                    b.ToTable("Link", (string)null);
                 });
 
             modelBuilder.Entity("AlternativeEngineerBlogServer.Domain.Tags.BlogTag", b =>
@@ -356,7 +449,7 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("AlternativeEngineerBlogServer.Domain.Users.AppUser", b =>
@@ -468,7 +561,7 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -488,7 +581,7 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("AlternativeEngineerBlogServer.Domain.Blogs.Blog", b =>
@@ -529,9 +622,15 @@ namespace AlternativeEngineerBlogServer.Infrastructure.Migrations
                         .WithMany("Comments")
                         .HasForeignKey("BlogId");
 
+                    b.HasOne("AlternativeEngineerBlogServer.Domain.Comments.Comment", "MainComment")
+                        .WithMany()
+                        .HasForeignKey("MainCommentId");
+
                     b.Navigation("AppUser");
 
                     b.Navigation("Blog");
+
+                    b.Navigation("MainComment");
                 });
 
             modelBuilder.Entity("AlternativeEngineerBlogServer.Domain.Shared.Link", b =>

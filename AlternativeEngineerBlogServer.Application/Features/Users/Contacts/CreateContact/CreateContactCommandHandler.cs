@@ -24,31 +24,32 @@ internal sealed class CreateContactCommandHandler(
         }
 
         Contact contact = mapper.Map<Contact>(request);
+        contact.IsRead = false;
         contact.CreatedBy = request.ContactName;
         contact.CreatedDate = DateTime.Now;
         
         await contactRepository.AddAsync(contact, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        string body = CreateBody(contact);
-        string subject = contact.Subject;
+        //string body = CreateBody(contact);
+        //string subject = contact.Subject;
 
-        EmailConfigurations emailConfigurations = new(
-           "smtp-mail.outlook.com",
-           "ypfppzbkknupvsvc",
-           587,
-           false,
-           true);
+        //EmailConfigurations emailConfigurations = new(
+        //   "smtp-mail.outlook.com",
+        //   "***",
+        //   587,
+        //   false,
+        //   true);
 
-        EmailModel<Stream> emailModel = new(
-            emailConfigurations,
-            "erendelibas58@outlook.com",
-            new List<string> { "erendelibas58@outlook.com" ?? "" },
-            subject,
-            body,
-            null);
+        //EmailModel<Stream> emailModel = new(
+        //    emailConfigurations,
+        //    "aaaaa@outlook.com",
+        //    new List<string> { "aaaaa@outlook.com" ?? "" },
+        //    subject,
+        //    body,
+        //    null);
         
-        await EmailService.SendEmailWithMailKitAsync(emailModel);
+        //await EmailService.SendEmailWithMailKitAsync(emailModel);
         return Result<string>.Succeed("Mesaj gönderildi");
     }
 

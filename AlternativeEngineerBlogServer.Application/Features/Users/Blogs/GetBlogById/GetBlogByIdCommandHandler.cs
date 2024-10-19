@@ -8,8 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AlternativeEngineerBlogServer.Application.Features.Users.Blogs.GetBlogById;
 internal sealed class GetBlogByIdCommandHandler(
-    IBlogRepository blogRepository,
-    IUnitOfWork unitOfWork) : IRequestHandler<GetBlogByIdCommand, Result<BlogDto>>
+    IBlogRepository blogRepository) : IRequestHandler<GetBlogByIdCommand, Result<BlogDto>>
 {
     public async Task<Result<BlogDto>> Handle(GetBlogByIdCommand request, CancellationToken cancellationToken)
     {
@@ -29,6 +28,7 @@ internal sealed class GetBlogByIdCommandHandler(
                 new GetBlogAuthorDto(
                     b.AppUser.FirstName,
                     b.AppUser.LastName,
+                    b.AppUser.UserName,
                     b.AppUser.Role,
                     b.AppUser.ProfilePicture),
                  new GetCategoryDto(
@@ -36,10 +36,10 @@ internal sealed class GetBlogByIdCommandHandler(
                     b.Category.Name)))
             .FirstOrDefaultAsync(cancellationToken);
 
-        Blog blog1 = await blogRepository.GetByExpressionAsync(p => p.Id == request.Id);
-        blog1.ViewCount += 1;
-        blogRepository.Update(blog1);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        //Blog blog1 = await blogRepository.GetByExpressionAsync(p => p.Id == request.Id);
+        //blog1.ViewCount += 1;
+        //blogRepository.Update(blog1);
+        //await unitOfWork.SaveChangesAsync(cancellationToken);
         
         if (blog is null)
         {

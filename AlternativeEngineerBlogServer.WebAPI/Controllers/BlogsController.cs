@@ -4,6 +4,8 @@ using AlternativeEngineerBlogServer.Application.Features.Users.Blogs.GetAllBlog;
 using AlternativeEngineerBlogServer.Application.Features.Users.Blogs.GetBlogByAuthorId;
 using AlternativeEngineerBlogServer.Application.Features.Users.Blogs.GetBlogById;
 using AlternativeEngineerBlogServer.Application.Features.Users.Blogs.UpdateBlog;
+using AlternativeEngineerBlogServer.Application.Features.Users.Blogs.UpdateBlogLikeCount;
+using AlternativeEngineerBlogServer.Application.Features.Users.Blogs.UpdateBlogViewCount;
 using AlternativeEngineerBlogServer.WebAPI.Abstractions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -64,6 +66,20 @@ public class BlogsController : ApiController
     public async Task<IActionResult> DeleteBlogById(Guid Id, Guid appUserId, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new DeleteBlogByIdCommand(Id, appUserId), cancellationToken);
+        return StatusCode(result.StatusCode, result);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> UpdateBlogViewCount(Guid Id, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new UpdateBlogViewCountCommand(Id), cancellationToken);
+        return StatusCode(result.StatusCode, result);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> UpdateBlogLikeCount(Guid Id, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new UpdateBlogLikeCountCommand(Id), cancellationToken);
         return StatusCode(result.StatusCode, result);
     }
 }

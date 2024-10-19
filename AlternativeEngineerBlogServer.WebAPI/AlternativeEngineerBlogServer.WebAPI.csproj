@@ -25,4 +25,12 @@
     <Folder Include="wwwroot\ProfilePictures\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="F:\Eren\Projeler\Projects\AlternativeEngineerBlog\AlternativeEngineerBlogServer\AlternativeEngineerBlogServer.WebAPI\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="F:\Eren\Projeler\Projects\AlternativeEngineerBlog\AlternativeEngineerBlogServer\AlternativeEngineerBlogServer.WebAPI\.editorconfig" />
+  </ItemGroup>
+
 </Project>

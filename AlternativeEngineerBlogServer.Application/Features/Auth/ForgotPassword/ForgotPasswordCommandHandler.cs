@@ -15,6 +15,17 @@ internal sealed class ForgotPasswordCommandHandler(
             return Result<string>.Failure("User not found");
         }
 
+        DateTime currentDateTime = DateTime.Now;
+        if (user.ForgotPasswordCodeSendDate.HasValue && (currentDateTime - user.ForgotPasswordCodeSendDate.Value).TotalHours > 6)
+        {
+            return Result<string>.Failure("Kodun süresi geçmiş lütfen tekrar deneyiniz");
+        }
+
+        if (user.ForgotPasswordCode != request.ForgotPasswordCode)
+        {
+            return Result<string>.Failure("Kod Hatalı!!");
+        }
+
         string token = await userManager.GeneratePasswordResetTokenAsync(user);
         return token;
     }

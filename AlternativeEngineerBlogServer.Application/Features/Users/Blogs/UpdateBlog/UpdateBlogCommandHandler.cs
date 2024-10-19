@@ -45,6 +45,7 @@ internal sealed class UpdateBlogCommandHandler(
         if(response is not null)
         {
             mainImage = FileService.FileSaveToServer(request.MainImage!, "wwwroot/Images/");
+            FileService.FileDeleteToServer("wwwroot/Images/" + blog.MainImage);
         }
 
 

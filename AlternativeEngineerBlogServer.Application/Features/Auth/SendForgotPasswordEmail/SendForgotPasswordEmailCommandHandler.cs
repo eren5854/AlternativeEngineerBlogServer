@@ -1,4 +1,6 @@
-﻿using AlternativeEngineerBlogServer.Domain.Users;
+﻿using AlternativeEngineerBlogServer.Domain.Repositories;
+using AlternativeEngineerBlogServer.Domain.Users;
+using ED.GenericRepository;
 using ED.Result;
 using GenericEmailService;
 using MediatR;
@@ -6,7 +8,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AlternativeEngineerBlogServer.Application.Features.Auth.SendForgotPasswordEmail;
 internal sealed class SendForgotPasswordEmailCommandHandler(
-    UserManager<AppUser> userManager) : IRequestHandler<SendForgotPasswordEmailCommand, Result<string>>
+    UserManager<AppUser> userManager,
+    IAppUserRepository appUserRepository,
+    IUnitOfWork unitOfWork) : IRequestHandler<SendForgotPasswordEmailCommand, Result<string>>
 {
     public async Task<Result<string>> Handle(SendForgotPasswordEmailCommand request, CancellationToken cancellationToken)
     {
@@ -16,19 +20,26 @@ internal sealed class SendForgotPasswordEmailCommandHandler(
             return Result<string>.Failure("User not found");
         }
 
-        string body = CreateBody(user);
-        string subject = "ForgotPassword";
+        Random random = new();
+        user.ForgotPasswordCode = random.Next(100000, 999999);  // 6 haneli kod oluştur
+        user.ForgotPasswordCodeSendDate = DateTime.Now;
+
+        appUserRepository.Update(user);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        string body = CreateBody(user.ForgotPasswordCode, user.Email);
+        string subject = "Şifremi Unuttum";
 
         EmailConfigurations emailConfigurations = new(
-           "smtp-mail.outlook.com",
-           "ypfppzbkknupvsvc",
-           587,
-           false,
+           "smtpout.secureserver.net",
+           "***",
+           465,
+           true,
            true);
 
         EmailModel<Stream> emailModel = new(
             emailConfigurations,
-            "erendelibas58@outlook.com",
+            "mail@gmail.com",
             new List<string> { user.Email ?? "" },
             subject,
             body,
@@ -36,13 +47,13 @@ internal sealed class SendForgotPasswordEmailCommandHandler(
 
         await EmailService.SendEmailWithMailKitAsync(emailModel);
 
-        return Result<string>.Succeed("New password email has been sent");
+        return Result<string>.Succeed("Şifremi unuttum maili gönderildi");
     }
 
-    private string CreateBody(AppUser user)
+    private string CreateBody(int? code, string? email)
     {
-        string body = $@"Click on the link to change your password
-<a href='http://localhost:4200/forgot-password/{user.Email}' target='_blank'>Click to change your password
+        string body = $@"Şifrenizi değiştirmek için aşağıdaki linke tıklayın: 
+<a href='https://link/forgot-password/{email}{code}' target='_blank'>https://link/forgot-password/{email}{code}
 </a>";
         return body;
     }

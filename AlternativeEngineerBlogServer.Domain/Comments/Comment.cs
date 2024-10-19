@@ -6,6 +6,9 @@ namespace AlternativeEngineerBlogServer.Domain.Comments;
 public sealed class Comment : Entity
 {
     public string Content { get; set; } = string.Empty;
+    public Guid? MainCommentId { get; set; }
+    public Comment? MainComment { get; set; }
+
     public Guid? AppUserId { get; set; }
     public AppUser? AppUser { get; set; }
 

@@ -44,6 +44,7 @@ internal sealed class UpdateUserCommandHandler(
         else
         {
             profilePicture = FileService.FileSaveToServer(request.ProfilePicture!, "wwwroot/ProfilePictures/");
+            FileService.FileDeleteToServer("wwwroot/ProfilePictures/" + user.ProfilePicture);
         }
 
         mapper.Map(request, user);

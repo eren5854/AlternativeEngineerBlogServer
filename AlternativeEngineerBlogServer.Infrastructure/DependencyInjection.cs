@@ -3,6 +3,7 @@ using AlternativeEngineerBlogServer.Infrastructure.Context;
 using AlternativeEngineerBlogServer.Infrastructure.Options;
 using AlternativeEngineerBlogServer.Infrastructure.Services;
 using ED.GenericRepository;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -44,6 +45,10 @@ public static class DependencyInjection
         services.AddAuthorizationBuilder();
 
         services.AddScoped<JwtProvider>();
+        services.AddScoped<DatabaseInfoService>();
+        services.AddSingleton<FileSizeService>(provider =>
+    new FileSizeService(provider.GetRequiredService<IWebHostEnvironment>().WebRootPath));
+
 
         services.Scan(action =>
         {

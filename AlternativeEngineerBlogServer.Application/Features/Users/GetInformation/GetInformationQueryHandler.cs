@@ -1,4 +1,5 @@
 ﻿using AlternativeEngineerBlogServer.Domain.DTOs;
+using AlternativeEngineerBlogServer.Domain.Informations;
 using AlternativeEngineerBlogServer.Domain.Repositories;
 using ED.Result;
 using MediatR;
@@ -13,15 +14,16 @@ internal sealed class GetInformationQueryHandler(
         var informations = await informationRepository
             .GetAll()
             .Select(s => new GetInformationDto(
-            s.Title,
-            s.SubTitle,
-            s.Description,
-            s.Address,
-            s.PhoneNumber,
-            s.LinkedinUrl,
-            s.InstagramUrl,
-            s.XUrl,
-            s.GithubUrl))
+                s.Id,
+                s.Title,
+                s.SubTitle,
+                s.Description,
+                s.Address,
+                s.PhoneNumber,
+                s.LinkedinUrl,
+                s.InstagramUrl,
+                s.XUrl,
+                s.GithubUrl))
             .ToListAsync(cancellationToken);
 
         return Result<List<GetInformationDto>>.Succeed(informations);

@@ -21,25 +21,25 @@ internal sealed class SendConfirmEmailCommandHandler(
             return Result<string>.Failure("Mail address already confirmed");
         }
 
-        string body = CreateBody(user);
-        string subject = "Verification Email";
+        //string body = CreateBody(user);
+        //string subject = "Verification Email";
 
-        EmailConfigurations emailConfigurations = new(
-           "smtp-mail.outlook.com",
-           "ypfppzbkknupvsvc",
-           587,
-           false,
-           true);
+        //EmailConfigurations emailConfigurations = new(
+        //   "smtp-mail.outlook.com",
+        //   "*****",
+        //   587,
+        //   false,
+        //   true);
 
-        EmailModel<Stream> emailModel = new(
-            emailConfigurations,
-            "erendelibas58@outlook.com",
-            new List<string> { user.Email ?? "" },
-            subject,
-            body,
-            null);
+        //EmailModel<Stream> emailModel = new(
+        //    emailConfigurations,
+        //    "mail@outlook.com",
+        //    new List<string> { user.Email ?? "" },
+        //    subject,
+        //    body,
+        //    null);
 
-        await EmailService.SendEmailWithMailKitAsync(emailModel);
+        //await EmailService.SendEmailWithMailKitAsync(emailModel);
         return Result<string>.Succeed("Confirmation email sent successfully");
     }
 

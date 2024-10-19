@@ -2,6 +2,7 @@
 using AlternativeEngineerBlogServer.Domain.Categories;
 using AlternativeEngineerBlogServer.Domain.Comments;
 using AlternativeEngineerBlogServer.Domain.Contacts;
+using AlternativeEngineerBlogServer.Domain.EmailJsParameters;
 using AlternativeEngineerBlogServer.Domain.Informations;
 using AlternativeEngineerBlogServer.Domain.Tags;
 using AlternativeEngineerBlogServer.Domain.Users;
@@ -25,6 +26,7 @@ public sealed class ApplicationDbContext : IdentityDbContext<AppUser, IdentityRo
     public DbSet<Information> Informations { get; set; }
     public DbSet<Tag> Tags { get; set; }
     //public DbSet<BlogTag> BlogsTags { get; set; }
+    public DbSet<EmailJsParameter> EmailJsParameters { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

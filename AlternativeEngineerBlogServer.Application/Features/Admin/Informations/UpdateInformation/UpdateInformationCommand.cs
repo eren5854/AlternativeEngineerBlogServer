@@ -7,6 +7,7 @@ public sealed record UpdateInformationCommand(
     string Title,
     string SubTitle,
     string Description,
+    string? Email,
     string? Address,
     string? PhoneNumber,
     string? LinkedinUrl,

@@ -17,8 +17,8 @@ internal sealed class GetAllAuthorQueryHandler(
             .Select(s => new GetAuthorDto(
                 s.FirstName, 
                 s.LastName,
-                s.UserName,
-                s.Email,
+                s.UserName!,
+                s.Email!,
                 s.DateOfBirth,
                 s.About,
                 s.Role,

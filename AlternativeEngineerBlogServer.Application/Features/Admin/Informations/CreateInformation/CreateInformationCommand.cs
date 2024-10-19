@@ -6,6 +6,7 @@ public sealed record CreateInformationCommand(
     string Title,
     string SubTitle,
     string Description,
+    string? Email,
     string? Address,
     string? PhoneNumber,
     string? LinkedinUrl,
